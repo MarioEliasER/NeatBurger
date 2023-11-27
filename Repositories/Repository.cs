@@ -1,4 +1,5 @@
-﻿using NeatBurger.Models.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using NeatBurger.Models.Entities;
 
 namespace NeatBurger.Repositories
 {
