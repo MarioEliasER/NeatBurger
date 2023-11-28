@@ -26,20 +26,19 @@ namespace NeatBurger.Controllers
 
         public IActionResult Menu(string Id)
         {
-            Id = Id.Replace("-", " ");
-            var clasificacion = repo.GetAll().OrderBy(x => x.Id).GroupBy(x => x.IdClasificacionNavigation.Nombre).Select(
-                x => new MenuViewModel
+            if (Id == null)
+            {
+                var lista = repo.GetClasificaciones();
+                MenuViewModel vm = new()
                 {
-                    Clasificacion = x.Key,
-                    Hamburguesas = repo.GetMenuByClasificacion(Id).Select(x => new HamburguesaModel
-                    {
-                        Id = x.Id,
-                        Nombre = x.Nombre,
-                        Descripción = x.Descripción,
-                        Precio = (decimal)x.Precio
-                    })
-                });
-            return View(clasificacion);
+                    ListaClasificacion = lista.ToList()
+                };
+            }
+            else
+            {
+
+            }
+            return View();
         }
     }
 }
