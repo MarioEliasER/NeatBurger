@@ -6,6 +6,7 @@ using NuGet.Protocol.Core.Types;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddTransient<Repository<Menu>>();
+builder.Services.AddTransient<MenuRepository>();
 builder.Services.AddDbContext<NeatContext>(
     x => x.UseMySql("server=localhost;user=root;password=root;database=neat", 
     Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.17-mysql"))

@@ -1,18 +1,18 @@
-﻿@{
+﻿@model NeatBurger.Models.ViewModels.MenuViewModel
+@{
     Layout = "~/Views/Shared/Layout.cshtml";
 }
 <section class="menu3">
     <div>
         <h1>NUESTRO MENÚ</h1>
-        <h3>Tradicionales</h3>
-        <h2 class="seleccionado"><a href="menu3.html"><span>Cuarto de libra con queso</span> <span class="price">$111.99</span></a></h2>
-        <h2><a href="menu3.html"><span>Cuarto de libra con queso</span> <span class="price">$111.99</span></a></h2>
-        <h2><a href="menu3.html"><span>Cuarto de libra con queso</span> <span class="price">$111.99</span></a></h2>
-        <h2><a href="menu3.html"><span>Cuarto de libra con queso</span> <span class="price">$111.99</span></a></h2>
-        <h3>Favoritas del chef</h3>
-        <h2><a href="menu3.html"><span>Cuarto de libra con queso</span> <span class="price">$111.99</span></a></h2>
-        <h2><a href="menu3.html"><span>Cuarto de libra con queso</span> <span class="price">$111.99</span></a></h2>
-        <h2><a href="menu3.html"><span>Cuarto de libra con queso</span> <span class="price">$111.99</span></a></h2>
+        @foreach (var clasif in Model.Clasificacion)
+        {
+            <h3>@clasif</h3>
+            foreach (var hamb in Model.Hamburguesas)
+            {
+                <h2 class="seleccionado"><a href="~/Home/Menu/@(hamb.Nombre.Replace(" ", "-"))"><span>@hamb.Nombre</span> <span class="price">@hamb.Precio.ToString("c")</span></a></h2>
+            }
+        }
     </div>
     <div>
         <img src="~/hamburguesas/1.png" />
