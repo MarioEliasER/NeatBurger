@@ -20,9 +20,12 @@ namespace NeatBurger.Controllers
             return View();
         }
 
-        public IActionResult Promociones()
+        public IActionResult Promociones(int Id)
         {
-
+            int indice = 0;
+            var lista = Repo.GetAll().Where(x=>x.PrecioPromocion != null && x.Id != Id);
+            
+            
             return View();
         }
 
