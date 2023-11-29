@@ -11,10 +11,10 @@ namespace NeatBurger.Models.ViewModels
     public class ClasificacionModel
     {
         public string Clasificacion { get; set; } = null!;
-        public IEnumerable<HamburguesaModel> ListaHamburguesas { get; set; } = null!;
+        public IEnumerable<MenusModel> ListaMenu { get; set; } = null!;
     }
 
-    public class HamburguesaModel
+    public class MenusModel
     {
         public int Id { get; set; }
         public string Nombre { get; set; } = null!;

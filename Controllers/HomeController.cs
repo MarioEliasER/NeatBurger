@@ -31,43 +31,37 @@ namespace NeatBurger.Controllers
 
         public IActionResult Menu(string Id)
         {
+            MenuViewModel vm = new();
             if (Id != null)
             {
                 Id = Id.Replace("-", " ");
-                MenuViewModel vm = new()
+                vm.Menu = Repo.GetXNombre(Id);
+                vm.ListaClasificaciones = Repo.GetData().GroupBy(x => x.IdClasificacionNavigation).Select(x => new ClasificacionModel()
                 {
-                    Menu = Repo.GetXNombre(Id),
-                    ListaClasificaciones = Repo.GetData().GroupBy(x => x.IdClasificacionNavigation).Select(x => new ClasificacionModel()
+                    Clasificacion = x.Key.Nombre,
+                    ListaMenu = x.Where(y => y.IdClasificacion == x.Key.Id).Select(x => new MenusModel()
                     {
-                        Clasificacion = x.Key.Nombre,
-                        ListaHamburguesas = x.Where(y => y.IdClasificacion == x.Key.Id).Select(x => new HamburguesaModel()
-                        {
-                            Id = x.Id,
-                            Nombre = x.Nombre,
-                            Precio = (decimal)x.Precio,
-                        }).ToList()
-                    })
-                };
-                return View(vm);
+                        Id = x.Id,
+                        Nombre = x.Nombre,
+                        Precio = (decimal)x.Precio,
+                    }).ToList()
+                });
             }
             else
             {
-                MenuViewModel vm = new()
+                vm.Menu = Repo.GetData().OrderBy(x => x.Nombre).First();
+                vm.ListaClasificaciones = Repo.GetData().GroupBy(x => x.IdClasificacionNavigation).Select(x => new ClasificacionModel()
                 {
-                    Menu = Repo.GetData().OrderBy(x => x.Nombre).First(),
-                    ListaClasificaciones = Repo.GetData().GroupBy(x => x.IdClasificacionNavigation).Select(x => new ClasificacionModel()
+                    Clasificacion = x.Key.Nombre,
+                    ListaMenu = x.Where(y => y.IdClasificacion == x.Key.Id).Select(x => new MenusModel()
                     {
-                        Clasificacion = x.Key.Nombre,
-                        ListaHamburguesas = x.Where(y => y.IdClasificacion == x.Key.Id).Select(x => new HamburguesaModel()
-                        {
-                            Id = x.Id,
-                            Nombre = x.Nombre,
-                            Precio = (decimal)x.Precio,
-                        }).ToList()
-                    })
-                };
-                return View(vm);
+                        Id = x.Id,
+                        Nombre = x.Nombre,
+                        Precio = (decimal)x.Precio,
+                    }).ToList()
+                });
             }
+            return View(vm);
         }
     }
 }

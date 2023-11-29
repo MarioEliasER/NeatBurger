@@ -5,10 +5,10 @@ namespace NeatBurger.Areas.Admin.Models
 {
     public class AdminMenuViewModel
     {
-        public IEnumerable<ClasificacionModel> ListaClasificaciones { get; set; } = null!;
+        public IEnumerable<ClasificacionAdminModel> ListaClasificaciones { get; set; } = null!;
     }
 
-    public class ClasificacionModel
+    public class ClasificacionAdminModel
     {
         public string Clasificacion { get; set; } = null!;
         public IEnumerable<Menu> ListaHamburguesas { get; set; } = null!;

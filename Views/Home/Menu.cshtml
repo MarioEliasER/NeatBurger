@@ -8,15 +8,15 @@
         @foreach (var clasif in Model.ListaClasificaciones)
         {
             <h3>@clasif.Clasificacion</h3>
-            @foreach (var hamb in clasif.ListaHamburguesas)
+            @foreach (var menu in clasif.ListaMenu)
             {
-                @if (hamb.Id == Model.Menu.Id)
+                @if (menu.Id == Model.Menu.Id)
                 {
-                    <h2 class="seleccionado"><a href="~/Home/Menu/@(hamb.Nombre.Replace(" ", "-"))"><span>@hamb.Nombre</span> <span class="price">@hamb.Precio.ToString("c")</span></a></h2>
+                    <h2 class="seleccionado"><a href="~/Home/Menu/@(menu.Nombre.Replace(" ", "-"))"><span>@menu.Nombre</span> <span class="price">@menu.Precio.ToString("c")</span></a></h2>
                 }
                 else
                 {
-                    <h2><a href="~/Home/Menu/@(hamb.Nombre.Replace(" ", "-"))"><span>@hamb.Nombre</span> <span class="price">@hamb.Precio.ToString("c")</span></a></h2>
+                    <h2><a href="~/Home/Menu/@(menu.Nombre.Replace(" ", "-"))"><span>@menu.Nombre</span> <span class="price">@menu.Precio.ToString("c")</span></a></h2>
                 }
             }
         }

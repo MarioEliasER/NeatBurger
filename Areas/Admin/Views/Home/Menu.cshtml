@@ -24,19 +24,19 @@
                 </p>
 
                 <span class="acciones">
-                    <a href="~/Admin/Home/Editar/@hamb.Nombre">Editar</a>
-                    <a href="~/Admin/Home/Eliminar/@hamb.Nombre">Eliminar</a>
+                    <a href="~/Admin/Menu/Editar/@hamb.Nombre">Editar</a>
+                    <a href="~/Admin/Menu/Eliminar/@hamb.Nombre">Eliminar</a>
                     @if (hamb.PrecioPromocion != null)
                     {
-                        <a href="~/Admin/Home/QuitarPromocion/@hamb.Nombre">Quitar promoción</a>
+                        <a href="~/Admin/Menu/QuitarPromocion/@hamb.Nombre">Quitar promoción</a>
                     }
                     else
                     {
-                        <a href="~/Admin/Home/QuitarPromocion/@hamb.Nombre">Agregar promoción</a>
+                        <a href="~/Admin/Menu/AgregarPromocion/@hamb.Nombre">Agregar promoción</a>
                     }
                 </span>
             </div>
         }
     }
-    <a class="fab" href="~/Admin/Home/Agregar">+</a>
+    <a class="fab" href="~/Admin/Menu/Agregar">+</a>
 </section>

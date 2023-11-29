@@ -4,7 +4,7 @@ namespace NeatBurger.Models.ViewModels
 {
     public class PromocionesViewModel
     {
-        public IEnumerable<MenuModel> ListaHamburguesas { get; set; } = null!;
+        public IEnumerable<MenuModel> ListaMenu { get; set; } = null!;
     }
 
     public class MenuModel
