@@ -1,0 +1,42 @@
+﻿@model NeatBurger.Areas.Admin.Models.AdminMenuViewModel
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+<section class="menu2">
+    @foreach (var clasif in Model.ListaClasificaciones)
+    {
+        <h1>@clasif.Clasificacion</h1>
+        foreach (var hamb in clasif.ListaHamburguesas)
+        {
+            <div>
+                <img src="~/hamburguesas/@(hamb.Id).png" />
+                <h1>@hamb.Nombre</h1>
+                @if (hamb.PrecioPromocion != null)
+                {
+                    <h2><del>@hamb.Precio.ToString("c")</del><br />@hamb.PrecioPromocion</h2>
+                }
+                else
+                {
+                    <h2>@hamb.Precio.ToString("c")</h2>
+                }
+                <p>
+                   @hamb.Descripción
+                </p>
+
+                <span class="acciones">
+                    <a href="~/Admin/Home/Editar/@hamb.Nombre">Editar</a>
+                    <a href="~/Admin/Home/Eliminar/@hamb.Nombre">Eliminar</a>
+                    @if (hamb.PrecioPromocion != null)
+                    {
+                        <a href="~/Admin/Home/QuitarPromocion/@hamb.Nombre">Quitar promoción</a>
+                    }
+                    else
+                    {
+                        <a href="~/Admin/Home/QuitarPromocion/@hamb.Nombre">Agregar promoción</a>
+                    }
+                </span>
+            </div>
+        }
+    }
+    <a class="fab" href="~/Admin/Home/Agregar">+</a>
+</section>

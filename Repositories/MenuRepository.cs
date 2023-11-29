@@ -10,15 +10,13 @@ namespace NeatBurger.Repositories
             
         }
 
-        public IEnumerable<Menu> GetMenuByClasificacion()
+        public Menu? GetXNombre(string nombre)
         {
-            return Context.Menu
-                .Include(x => x.IdClasificacionNavigation);
+            return Context.Menu.Include(x=>x.IdClasificacionNavigation).FirstOrDefault(x=> x.Nombre == nombre);
         }
-
-        public IEnumerable<Clasificacion> GetClasificaciones()
+        public IEnumerable<Menu> GetData()
         {
-            return Context.Clasificacion.OrderBy(x => x.Id);
+            return Context.Menu.Include(x=>x.IdClasificacionNavigation).OrderBy(x => x.Id);
         }
     }
 }

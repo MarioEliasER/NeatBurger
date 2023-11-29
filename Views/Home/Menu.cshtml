@@ -5,17 +5,24 @@
 <section class="menu3">
     <div>
         <h1>NUESTRO MENÚ</h1>
-        @foreach (var clasif in Model.ListaClasificacion)
+        @foreach (var clasif in Model.ListaClasificaciones)
         {
-            <h3>@clasif</h3>
-            foreach (var hamb in Model.Hamburguesas)
+            <h3>@clasif.Clasificacion</h3>
+            @foreach (var hamb in clasif.ListaHamburguesas)
             {
-                <h2 class="seleccionado"><a href="~/Home/Menu/@(hamb.Nombre.Replace(" ", "-"))"><span>@hamb.Nombre</span> <span class="price">@hamb.Precio.ToString("c")</span></a></h2>
+                @if (hamb.Id == Model.Menu.Id)
+                {
+                    <h2 class="seleccionado"><a href="~/Home/Menu/@(hamb.Nombre.Replace(" ", "-"))"><span>@hamb.Nombre</span> <span class="price">@hamb.Precio.ToString("c")</span></a></h2>
+                }
+                else
+                {
+                    <h2><a href="~/Home/Menu/@(hamb.Nombre.Replace(" ", "-"))"><span>@hamb.Nombre</span> <span class="price">@hamb.Precio.ToString("c")</span></a></h2>
+                }
             }
         }
     </div>
     <div>
-        <img src="~/hamburguesas/1.png" />
-        <p>Un cuarto de libra de carne de res con dos rebanas de queso, cebolla, pepinillos, mostaza y una porción de tomate, todo en un pan con ajonjolí.</p>
+        <img src="~/hamburguesas/@(Model.Menu.Id).png" />
+        <p>@Model.Menu.Descripción</p>
     </div>
 </section>
