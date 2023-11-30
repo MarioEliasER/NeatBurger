@@ -17,5 +17,5 @@ public partial class Menu
 
     public double? PrecioPromocion { get; set; }
 
-    public virtual Clasificacion IdClasificacionNavigation { get; set; } = null!;
+    public virtual Clasificacion? IdClasificacionNavigation { get; set; }
 }

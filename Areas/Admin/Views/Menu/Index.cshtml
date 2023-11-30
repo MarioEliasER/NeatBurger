@@ -6,33 +6,33 @@
     @foreach (var clasif in Model.ListaClasificaciones)
     {
         <h1>@clasif.Clasificacion</h1>
-        foreach (var hamb in clasif.ListaHamburguesas)
+        foreach (var menu in clasif.ListaHamburguesas)
         {
             <div>
-                <img src="~/hamburguesas/@(hamb.Id).png" />
-                <h1>@hamb.Nombre</h1>
-                @if (hamb.PrecioPromocion != null)
+                <img src="~/hamburguesas/@(menu.Id).png" />
+                <h1>@menu.Nombre</h1>
+                @if (menu.PrecioPromocion != null)
                 {
-                    <h2><del>@hamb.Precio.ToString("c")</del><br />@hamb.PrecioPromocion</h2>
+                    <h2><del>@menu.Precio.ToString("c")</del><br />@menu.PrecioPromocion?.ToString("c")</h2>
                 }
                 else
                 {
-                    <h2>@hamb.Precio.ToString("c")</h2>
+                    <h2>@menu.Precio.ToString("c")</h2>
                 }
                 <p>
-                   @hamb.Descripción
+                   @menu.Descripción
                 </p>
 
                 <span class="acciones">
-                    <a href="~/Admin/Menu/Editar/@hamb.Nombre">Editar</a>
-                    <a href="~/Admin/Menu/Eliminar/@hamb.Nombre">Eliminar</a>
-                    @if (hamb.PrecioPromocion != null)
+                    <a href="~/Admin/Menu/Editar/@menu.Id">Editar</a>
+                    <a href="~/Admin/Menu/Eliminar/@menu.Id">Eliminar</a>
+                    @if (menu.PrecioPromocion != null)
                     {
-                        <a href="~/Admin/Menu/QuitarPromocion/@hamb.Nombre">Quitar promoción</a>
+                        <a href="~/Admin/Menu/QuitarPromocion/@menu.Id">Quitar promoción</a>
                     }
                     else
                     {
-                        <a href="~/Admin/Menu/AgregarPromocion/@hamb.Nombre">Agregar promoción</a>
+                        <a href="~/Admin/Menu/AgregarPromocion/@menu.Id">Agregar promoción</a>
                     }
                 </span>
             </div>

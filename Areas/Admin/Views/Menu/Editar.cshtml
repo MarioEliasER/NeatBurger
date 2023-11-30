@@ -1,10 +1,13 @@
 ﻿@model NeatBurger.Areas.Admin.Models.AdminAgregarMenuViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
+    ViewData["Title"] = "Editar";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
-<form method="post" action="~/Admin/Menu/Agregar" enctype="multipart/form-data">
-    <h1>Agregar hamburguesa al menú</h1>
+
+<form method="post" action="~/Admin/Menu/Editar">
+    <h1>Editar hamburguesa del menú</h1>
+    <input type="hidden" asp-for="Menu.Id" />
     <span>
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" asp-for="Menu.Nombre" required>
@@ -22,19 +25,21 @@
 
     <span>
         <label for="clasificacion">Clasificación:</label>
-        <select id="clasificacion" asp-for="Menu.IdClasificacion" asp-items="@(new SelectList(Model.Clasificaciones, "Id", "Nombre"))" required>
-            
+        <select id="clasificacion" asp-for="Menu.IdClasificacion" asp-items="@(new SelectList(Model.Clasificaciones,"Id", "Nombre"))"  required>
+
         </select>
     </span>
 
     <span>
         <label for="imagen">Imagen:</label>
-        <input type="file" id="imagen" accept="image/png" asp-for="Archivo" onchange="previewImagen()">
-        <img id="imagen-preview" src="~/images/burger.png">
-        <p id="error">@Html.ValidationSummary()</p>
+        <input type="file" id="imagen" asp-for="Archivo" accept="image/png" onchange="previewImagen()">
+        <img id="imagen-preview" src="~/hamburguesas/@(Model.Menu.Id).png">
+        <p id="error">@Html.ValidationSummary(true)</p>
     </span>
+
     <div class="botones">
-        <input type="submit" value="Agregar" />
+        
+        <input type="submit" value="Guardar" />
         <a href="~Admin/Menu/Index">
             <input type="button" value="Cancelar" />
         </a>
