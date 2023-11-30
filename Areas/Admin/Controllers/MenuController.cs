@@ -34,7 +34,7 @@ namespace NeatBurger.Areas.Admin.Controllers
         {
             AdminAgregarMenuViewModel vm = new()
             {
-                Clasificaciones = ClasifRepo.GetAll().OrderBy(x => x.Id).Select(x => new ClasificacionModel 
+                Clasificaciones = ClasifRepo.GetAll().OrderBy(x => x.Id).Select(x => new ClasifModel 
                 { 
                     Id = x.Id,
                     Nombre = x.Nombre
@@ -83,12 +83,17 @@ namespace NeatBurger.Areas.Admin.Controllers
                     System.IO.File.Copy("wwwroot/images/burger.png", $"wwwroot/hamburguesas/{vm.Menu.Id}.png");
                 }
             }
-            vm.Clasificaciones = ClasifRepo.GetAll().OrderBy(x => x.Id).Select(x => new ClasificacionModel
+            vm.Clasificaciones = ClasifRepo.GetAll().OrderBy(x => x.Id).Select(x => new ClasifModel
             {
                 Id = x.Id,
                 Nombre = x.Nombre
             });
             return View(vm);
+        }
+
+        public IActionResult Eliminar(string Id)
+        {
+            return View();
         }
     }
 }
