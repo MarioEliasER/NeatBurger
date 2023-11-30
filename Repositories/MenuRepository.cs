@@ -18,5 +18,10 @@ namespace NeatBurger.Repositories
         {
             return Context.Menu.Include(x=>x.IdClasificacionNavigation).OrderBy(x => x.Id);
         }
+
+        public IEnumerable<Menu> GetPromociones()
+        {
+            return Context.Menu.Where(x => x.PrecioPromocion != null || x.PrecioPromocion > 0).OrderBy(x => x.Nombre);
+        }
     }
 }

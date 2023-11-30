@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Components.RenderTree;
+using Microsoft.AspNetCore.Mvc;
 using NeatBurger.Models.Entities;
 using NeatBurger.Models.ViewModels;
 using NeatBurger.Repositories;
@@ -20,13 +21,31 @@ namespace NeatBurger.Controllers
             return View();
         }
 
-        public IActionResult Promociones(int Id)
+        public IActionResult Promociones(string Id)
         {
-            int indice = 0;
-            var lista = Repo.GetAll().Where(x=>x.PrecioPromocion != null && x.Id != Id);
-            
-            
-            return View();
+            var lista = Repo.GetPromociones().Select(x=> new
+            {
+                Nombre = x.Nombre
+            }).ToArray();
+            if (lista != null)
+            {
+                Id = Id.Replace("-", " ") ?? lista[0].Nombre;
+                var datos = Repo.Get(Id);
+                int indice = Array.FindIndex(lista, x => x.Nombre == Id);
+                PromocionesViewModel vm = new();
+                vm.Nombre = Id;
+                vm.Id = datos?.Id ?? 0;
+                vm.Precio = (double)(datos?.Precio ?? 0);
+                vm.PrecioPromocion = (double)(datos?.PrecioPromocion?? 0);
+                vm.Descripción = datos?.Descripción ?? "N/A";
+                vm.MenuAnterior = lista[(indice - 1 + lista.Length) % lista.Length].Nombre;
+                vm.MenuSiguiente = lista[(indice + 1) % lista.Length].Nombre;
+                return View(vm);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         public IActionResult Menu(string Id)
