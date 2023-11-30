@@ -217,9 +217,17 @@ namespace NeatBurger.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult AgregarPromocion(AdminPromocionViewModel vm)
         {
+            if (string.IsNullOrWhiteSpace(vm.Nombre))
+            {
+                ModelState.AddModelError("", "El nombre no puede estar vacío.");
+            }
             if (vm.PrecioPromocion >= vm.Precio)
             {
                 ModelState.AddModelError("", "La promoción debe ser menor al precio actual.");
+            }
+            if (vm.PrecioPromocion <= 0)
+            {
+                ModelState.AddModelError("", "La promoción no puede ser 0.");
             }
             if (ModelState.IsValid)
             {
@@ -257,16 +265,32 @@ namespace NeatBurger.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult QuitarPromocion(AdminPromocionViewModel vm)
         {
-            var menu = Repo.Get(vm.Id);
-            if (menu == null)
+            if (string.IsNullOrWhiteSpace(vm.Nombre))
             {
+                ModelState.AddModelError("", "El nombre no puede estar vacío.");
+            }
+            if (vm.PrecioPromocion >= vm.Precio)
+            {
+                ModelState.AddModelError("", "La promoción debe ser menor al precio actual.");
+            }
+            if (vm.PrecioPromocion <= 0)
+            {
+                ModelState.AddModelError("", "La promoción no puede ser 0.");
+            }
+            if (ModelState.IsValid)
+            {
+                var menu = Repo.Get(vm.Id);
+                if (menu == null)
+                {
+                    return RedirectToAction("Index");
+                }
+                menu.Nombre = vm.Nombre;
+                menu.Precio = vm.Precio;
+                menu.PrecioPromocion = null;
+                Repo.Update(menu);
                 return RedirectToAction("Index");
             }
-            menu.Nombre = vm.Nombre;
-            menu.Precio = vm.Precio;
-            menu.PrecioPromocion = null;
-            Repo.Update(menu);
-            return RedirectToAction("Index");
+            return View(vm);
         }
     }
 }
