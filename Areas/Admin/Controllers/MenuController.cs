@@ -46,15 +46,15 @@ namespace NeatBurger.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Agregar(AdminAgregarMenuViewModel vm)
         {
-            if (string.IsNullOrWhiteSpace(vm.Menu.Nombre))
+            if (string.IsNullOrWhiteSpace(vm.Nombre))
             {
                 ModelState.AddModelError("", "El nombre no puede estar vacío.");
             }
-            if (vm.Menu.Precio <= 0)
+            if (vm.Precio <= 0)
             {
                 ModelState.AddModelError("", "El precio no puede ser 0 ni ser menor a 0.");
             }
-            if (string.IsNullOrWhiteSpace(vm.Menu.Descripción))
+            if (string.IsNullOrWhiteSpace(vm.Descripción))
             {
                 ModelState.AddModelError("", "La descripción no puede estar vacía.");
             }
@@ -71,16 +71,22 @@ namespace NeatBurger.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
-                Repo.Insert(vm.Menu);
+                var menu = new Menu();
+                menu.Nombre= vm.Nombre;
+                menu.Descripción = vm.Descripción;
+                menu.Precio = vm.Precio;
+                menu.PrecioPromocion = vm.PrecioPromocion;
+                menu.IdClasificacion = vm.IdClasificacion;
+                Repo.Insert(menu);
                 if (vm.Archivo != null)
                 {
-                    FileStream fs = System.IO.File.Create($"wwwroot/hamburguesas/{vm.Menu.Id}.png");
+                    FileStream fs = System.IO.File.Create($"wwwroot/hamburguesas/{vm.Id}.png");
                     vm.Archivo.CopyTo(fs);
                     fs.Close();
                 }
                 else
                 {
-                    System.IO.File.Copy("wwwroot/images/burger.png", $"wwwroot/hamburguesas/{vm.Menu.Id}.png");
+                    System.IO.File.Copy("wwwroot/images/burger.png", $"wwwroot/hamburguesas/{vm.Id}.png");
                 }
                 return RedirectToAction("Index");
             }
@@ -102,7 +108,11 @@ namespace NeatBurger.Areas.Admin.Controllers
             else
             {
                 AdminAgregarMenuViewModel vm = new();
-                vm.Menu = menu;
+                vm.Id = menu.Id;
+                vm.Nombre = menu.Nombre;
+                vm.Precio = menu.Precio;
+                vm.Descripción = menu.Descripción;
+                vm.IdClasificacion = menu.IdClasificacion;
                 vm.Clasificaciones = ClasifRepo.GetAll()
                     .Select(x => new ClasifModel
                     {
@@ -116,15 +126,15 @@ namespace NeatBurger.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Editar(AdminAgregarMenuViewModel vm)
         {
-            if (string.IsNullOrWhiteSpace(vm.Menu.Nombre))
+            if (string.IsNullOrWhiteSpace(vm.Nombre))
             {
                 ModelState.AddModelError("", "El nombre no puede estar vacío.");
             }
-            if (vm.Menu.Precio <= 0)
+            if (vm.Precio <= 0)
             {
                 ModelState.AddModelError("", "El precio no puede ser 0 ni ser menor a 0.");
             }
-            if (string.IsNullOrWhiteSpace(vm.Menu.Descripción))
+            if (string.IsNullOrWhiteSpace(vm.Descripción))
             {
                 ModelState.AddModelError("", "La descripción no puede estar vacía.");
             }
@@ -141,21 +151,22 @@ namespace NeatBurger.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
-                var menu = Repo.Get(vm.Menu.Id);
+                var menu = Repo.Get(vm.Id);
                 if (menu == null)
                 {
                     return RedirectToAction("Index");
                 }
-                menu.Nombre = vm.Menu.Nombre;
-                menu.Descripción = vm.Menu.Descripción;
-                menu.Precio = vm.Menu.Precio;
-                menu.PrecioPromocion = vm.Menu.PrecioPromocion;
-                menu.IdClasificacion = vm.Menu.IdClasificacion;
+                menu.Id = vm.Id;
+                menu.Nombre = vm.Nombre;
+                menu.Descripción = vm.Descripción;
+                menu.Precio = vm.Precio;
+                menu.PrecioPromocion = menu.PrecioPromocion;
+                menu.IdClasificacion = vm.IdClasificacion;
 
                 Repo.Update(menu);
                 if (vm.Archivo != null)
                 {
-                    System.IO.FileStream fs = System.IO.File.Create($"wwwroot/hamburguesas/{vm.Menu.Id}.png");
+                    System.IO.FileStream fs = System.IO.File.Create($"wwwroot/hamburguesas/{vm.Id}.png");
                     vm.Archivo.CopyTo(fs);
                     fs.Close();
                 }

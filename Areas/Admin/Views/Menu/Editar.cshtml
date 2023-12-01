@@ -7,25 +7,25 @@
 
 <form method="post" action="~/Admin/Menu/Editar">
     <h1>Editar hamburguesa del menú</h1>
-    <input type="hidden" asp-for="Menu.Id" />
+    <input type="hidden" asp-for="Id" />
     <span>
         <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" asp-for="Menu.Nombre" required>
+        <input type="text" id="nombre" asp-for="Nombre" required>
     </span>
 
     <span>
         <label for="precio">Precio:</label>
-        <input type="number" id="precio" asp-for="Menu.Precio" min="0" step="0.01" required>
+        <input type="number" id="precio" asp-for="Precio" min="0" step="0.01" required>
     </span>
 
     <span>
         <label for="descripcion">Descripción:</label>
-        <textarea id="descripcion" asp-for="Menu.Descripción" required></textarea>
+        <textarea id="descripcion" asp-for="Descripción" required></textarea>
     </span>
 
     <span>
         <label for="clasificacion">Clasificación:</label>
-        <select id="clasificacion" asp-for="Menu.IdClasificacion" asp-items="@(new SelectList(Model.Clasificaciones,"Id", "Nombre"))"  required>
+        <select id="clasificacion" asp-for="IdClasificacion" asp-items="@(new SelectList(Model.Clasificaciones,"Id", "Nombre"))"  required>
 
         </select>
     </span>
@@ -33,14 +33,14 @@
     <span>
         <label for="imagen">Imagen:</label>
         <input type="file" id="imagen" asp-for="Archivo" accept="image/png" onchange="previewImagen()">
-        <img id="imagen-preview" src="~/hamburguesas/@(Model.Menu.Id).png">
+        <img id="imagen-preview" src="~/hamburguesas/@(Model.Id).png">
         <p id="error">@Html.ValidationSummary(true)</p>
     </span>
 
     <div class="botones">
         
         <input type="submit" value="Guardar" />
-        <a href="~Admin/Menu/Index">
+        <a href="~/Admin/Menu/Index">
             <input type="button" value="Cancelar" />
         </a>
     </div>
