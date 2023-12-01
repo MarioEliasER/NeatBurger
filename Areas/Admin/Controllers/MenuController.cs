@@ -50,9 +50,9 @@ namespace NeatBurger.Areas.Admin.Controllers
             {
                 ModelState.AddModelError("", "El nombre no puede estar vacío.");
             }
-            if (vm.Menu.Precio == 0)
+            if (vm.Menu.Precio <= 0)
             {
-                ModelState.AddModelError("", "El nombre no puede estar vacío.");
+                ModelState.AddModelError("", "El precio no puede ser 0 ni ser menor a 0.");
             }
             if (string.IsNullOrWhiteSpace(vm.Menu.Descripción))
             {
@@ -120,9 +120,9 @@ namespace NeatBurger.Areas.Admin.Controllers
             {
                 ModelState.AddModelError("", "El nombre no puede estar vacío.");
             }
-            if (vm.Menu.Precio == 0)
+            if (vm.Menu.Precio <= 0)
             {
-                ModelState.AddModelError("", "El nombre no puede estar vacío.");
+                ModelState.AddModelError("", "El precio no puede ser 0 ni ser menor a 0.");
             }
             if (string.IsNullOrWhiteSpace(vm.Menu.Descripción))
             {
@@ -134,9 +134,9 @@ namespace NeatBurger.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError("", "Solo se permite subir imagenes en formato PNG.");
                 }
-                if (vm.Archivo.Length > 500 * 1024)
+                if (vm.Archivo.Length > 5000 * 1024)
                 {
-                    ModelState.AddModelError("", "Solo se permiten archivos no mayores a 500Kb");
+                    ModelState.AddModelError("", "Solo se permiten archivos no mayores a 5MB");
                 }
             }
             if (ModelState.IsValid)

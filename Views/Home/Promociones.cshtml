@@ -13,7 +13,7 @@
         <p>@Model.Descripción.</p>
     </div>
     <span>
-        <a href="~/Home/">&lt;</a>
-        <a href="promociones.html">&gt;</a>
+        <a href="~/Home/Promociones/@Model.MenuAnterior.Replace(" ", "-")">&lt;</a>
+        <a href="~/Home/Promociones/@Model.MenuSiguiente.Replace(" ", "-")">&gt;</a>
     </span>
 </section>

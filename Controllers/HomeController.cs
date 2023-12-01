@@ -29,8 +29,8 @@ namespace NeatBurger.Controllers
             }).ToArray();
             if (lista != null)
             {
-                Id = Id.Replace("-", " ") ?? lista[0].Nombre;
-                var datos = Repo.Get(Id);
+                Id = Id?.Replace("-", " ") ?? lista[0].Nombre;
+                var datos = Repo.GetXNombre(Id);
                 int indice = Array.FindIndex(lista, x => x.Nombre == Id);
                 PromocionesViewModel vm = new();
                 vm.Nombre = Id;
@@ -58,7 +58,7 @@ namespace NeatBurger.Controllers
                 vm.ListaClasificaciones = Repo.GetData().GroupBy(x => x.IdClasificacionNavigation).Select(x => new ClasificacionModel()
                 {
                     Clasificacion = x.Key.Nombre,
-                    ListaMenu = x.Where(y => y.IdClasificacion == x.Key.Id).Select(x => new MenusModel()
+                    ListaMenu = x.Where(y => y.IdClasificacion == x.Key.Id).OrderBy(x => x.Nombre).Select(x => new MenusModel()
                     {
                         Id = x.Id,
                         Nombre = x.Nombre,
@@ -68,11 +68,11 @@ namespace NeatBurger.Controllers
             }
             else
             {
-                vm.Menu = Repo.GetData().OrderBy(x => x.Nombre).First();
+                vm.Menu = Repo.GetData().OrderBy(x => x.Nombre).FirstOrDefault();
                 vm.ListaClasificaciones = Repo.GetData().GroupBy(x => x.IdClasificacionNavigation).Select(x => new ClasificacionModel()
                 {
                     Clasificacion = x.Key.Nombre,
-                    ListaMenu = x.Where(y => y.IdClasificacion == x.Key.Id).Select(x => new MenusModel()
+                    ListaMenu = x.Where(y => y.IdClasificacion == x.Key.Id).OrderBy(x=>x.Nombre).Select(x => new MenusModel()
                     {
                         Id = x.Id,
                         Nombre = x.Nombre,
