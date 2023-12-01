@@ -27,7 +27,7 @@ namespace NeatBurger.Controllers
             {
                 Nombre = x.Nombre
             }).ToArray();
-            if (lista != null)
+            if (lista.Any())
             {
                 Id = Id?.Replace("-", " ") ?? lista[0].Nombre;
                 var datos = Repo.GetXNombre(Id);
@@ -48,14 +48,14 @@ namespace NeatBurger.Controllers
             }
         }
 
-        public IActionResult Menu(string Id)
+        public IActionResult Menu(string? Id)
         {
             MenuViewModel vm = new();
             if (Id != null)
             {
                 Id = Id.Replace("-", " ");
                 vm.Menu = Repo.GetXNombre(Id);
-                vm.ListaClasificaciones = Repo.GetData().GroupBy(x => x.IdClasificacionNavigation).Select(x => new ClasificacionModel()
+                vm.ListaClasificaciones = Repo.GetData().GroupBy(x => x.IdClasificacionNavigation).OrderBy(x=> x.Key.Nombre).Select(x => new ClasificacionModel()
                 {
                     Clasificacion = x.Key.Nombre,
                     ListaMenu = x.Where(y => y.IdClasificacion == x.Key.Id).OrderBy(x => x.Nombre).Select(x => new MenusModel()
@@ -68,7 +68,7 @@ namespace NeatBurger.Controllers
             }
             else
             {
-                vm.Menu = Repo.GetData().OrderBy(x => x.Nombre).FirstOrDefault();
+                vm.Menu = Repo.GetData().OrderBy(x => x.Nombre).First();
                 vm.ListaClasificaciones = Repo.GetData().GroupBy(x => x.IdClasificacionNavigation).Select(x => new ClasificacionModel()
                 {
                     Clasificacion = x.Key.Nombre,
